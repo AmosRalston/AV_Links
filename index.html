@@ -194,21 +194,59 @@
     .footer a:hover { text-decoration: underline; }
 
     /* Bookmark Popup */
+    .bookmark-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 999;
+    }
+
     .bookmark-popup {
-      display:none;
-      position:fixed;
-      top:20%;
-      left:50%;
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      background:#f38121;
-      color:#fff;
-      padding:20px 30px;
-      border: radius 10px;
-      font-family:Arial, sans-serif;
-      box-shadow:0 6px 20px rgba(0,0,0,0.3);
-      z-index:1000;
+      background: var(--navy2);
+      border: 1px solid var(--orange);
+      color: var(--white);
+      padding: 1.5rem 1.75rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      z-index: 1000;
       text-align: center;
-      font-size: 18px;
+      font-size: 0.95rem;
+      max-width: 320px;
+      width: 90%;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .popup-close:hover { color: var(--white); }
+
+    .popup-message {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--orange);
+    }
+
+    .popup-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     @keyframes fadeUp {
@@ -264,20 +302,26 @@
       </a>
 
     </div>
-    <div id="bookmarkTip" class="bookmark-popup">Press <b>Ctrl + D</b> (Windows) or <b>Cmd + D</b> (Mac) to bookmark this page.</div>
+    <div id="bookmarkOverlay" class="bookmark-overlay" onclick="closeBookmarkTip()"></div>
+    <div id="bookmarkTip" class="bookmark-popup">
+      <button class="popup-close" onclick="closeBookmarkTip()" aria-label="Close">&times;</button>
+      <div class="popup-message" id="popupMessage"></div>
+      <div class="popup-hint">Press <b>Ctrl+D</b> (Windows) or <b>Cmd+D</b> (Mac) to bookmark that page.</div>
+    </div>
     <div class="footer">&#169; <a href="https://imagenet.com/" target="_blank" rel="noopener">ImageNet Consulting</a> &middot; Internal Use Only</div>
 
   </div>
   <script>
-function showBookmarkTip(message) {
-  var tip = document.getElementById("bookmarkTip");
-  tip.innerHTML = message;
-  tip.style.display = "block";
+    function showBookmarkTip(message) {
+      document.getElementById("popupMessage").innerHTML = message;
+      document.getElementById("bookmarkTip").style.display = "block";
+      document.getElementById("bookmarkOverlay").style.display = "block";
+    }
 
-  setTimeout(function() {
-    tip.style.display = "none";
-  }, 5000);
-}
-</script>
+    function closeBookmarkTip() {
+      document.getElementById("bookmarkTip").style.display = "none";
+      document.getElementById("bookmarkOverlay").style.display = "none";
+    }
+  </script>
 </body>
 </html>
