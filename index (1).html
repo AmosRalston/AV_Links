@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ImageNet | AV Resource Links</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1d2d44;
+      --navy2:  #243553;
+      --orange: #f38121;
+      --white:  #ffffff;
+      --gray:   #cdcdcf;
+      --muted:  #8a95a8;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--navy);
+      font-family: 'Noto Sans', sans-serif;
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.75' numOctaves='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23noise)' opacity='0.20'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo-bar {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .divider {
+      width: 60%;
+      height: 3px;
+      background: var(--orange);
+      margin: 0 auto 1rem;
+      border-radius: 2px;
+    }
+
+    .header h1 {
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Cards ── */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--white);
+      transition: background 0.18s, border-color 0.18s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.4s ease forwards;
+    }
+
+    .link-card::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--orange);
+      border-radius: 10px 0 0 10px;
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+
+    .link-card:hover {
+      background: #1e3255;
+      border-color: rgba(243,129,33,0.35);
+      transform: translateY(-2px);
+    }
+
+    .link-card:hover::after { opacity: 1; }
+
+    .link-card:nth-child(1) { animation-delay: 0.05s; }
+    .link-card:nth-child(2) { animation-delay: 0.12s; }
+    .link-card:nth-child(3) { animation-delay: 0.19s; }
+
+    .link-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: rgba(243,129,33,0.12);
+      border: 1px solid rgba(243,129,33,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+
+    .link-card:hover .link-icon { background: rgba(243,129,33,0.22); }
+
+    .link-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--orange);
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .link-text { flex: 1; min-width: 0; }
+
+    .link-label {
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-arrow {
+      color: var(--muted);
+      font-size: 1.1rem;
+      transition: color 0.18s, transform 0.18s;
+      flex-shrink: 0;
+    }
+
+    .link-card:hover .link-arrow {
+      color: var(--orange);
+      transform: translateX(3px);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: var(--gray);
+      letter-spacing: 0.5px;
+    }
+
+    .footer a { color: var(--white); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* Bookmark Popup */
+    .bookmark-popup {
+      display:none;
+      position:fixed;
+      top:20%;
+      left:50%;
+      transform: translate(-50%, -50%);
+      background:#333;
+      color:#fff;
+      padding:20px 30px;
+      border: radius 10px;
+      font-family:Arial, sans-serif;
+      box-shadow:0 6px 20px rgba(0,0,0,0.3);
+      z-index:1000;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div class="logo-bar">
+        <img src="https://imagenet.com/images/about/media/logos/ImageNet Logo.svg" alt="ImageNet Consulting" style="height: 96px; width: auto;" />
+      </div>
+      <div class="divider"></div>
+      <h1>AV Resource Links</h1>
+    </div>
+
+    <div class="links">
+
+      <a href="https://forms.clickup.com/8590532/f/86564-640/RQBDDVC1OE91UTQ1FN" onclick="showBookmarkTip('Bookmark the AV Request for Quote page')" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-label">AV Request for Quote (RFQ)</div>
+          <div class="link-desc">Submit a request for a new AV project here</div>
+        </div>
+        <div class="link-arrow">&#8594;</div>
+      </a>
+
+      <a href="https://forms.clickup.com/f/86564-700/YJ42EPX8AZ8ATTJ24D" onclick="showBookmarkTip('Bookmark the Welcome Screen Request page')" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-label">Welcome Screen Request</div>
+          <div class="link-desc">Submit a request to welcome visitors on Showroom displays</div>
+        </div>
+        <div class="link-arrow">&#8594;</div>
+      </a>
+
+      <a href="https://forms.clickup.com/f/86564-392/9B5UOFBPHHIRG4D40K" onclick="showBookmarkTip('Bookmark the AV System Service Request page')" class="link-card" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-label">AV System Service Request</div>
+          <div class="link-desc">Submit a ticket for support of an existing AV system</div>
+        </div>
+        <div class="link-arrow">&#8594;</div>
+      </a>
+
+    </div>
+    <div id="bookmarkTip" class="bookmark-popup">Press <b>Ctrl + D</b> (Windows) or <b>Cmd + D</b> (Mac) to bookmark this page.</div>
+    <div class="footer">&#169; <a href="https://imagenet.com/" target="_blank" rel="noopener">ImageNet Consulting</a> &middot; Internal Use Only</div>
+
+  </div>
+  <script>
+function showBookmarkTip(message) {
+  var tip = document.getElementById("bookmarkTip");
+  tip.innerHTML = message;
+  tip.style.display = "block";
+
+  setTimeout(function() {
+    tip.style.display = "none";
+  }, 5000);
+}
+</script>
+</body>
+</html>
